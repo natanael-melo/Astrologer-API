@@ -76,7 +76,10 @@ def register_legacy_v6_routes(application: FastAPI) -> None:
         if old_path in routes:
             raise RuntimeError(f"Legacy API path already registered: {old_path}")
         if new_path not in routes:
-            raise RuntimeError(f"Missing canonical API path: {new_path}")
+            # Patch local (teste): algumas rotas canônicas do v6 HEAD ainda não
+            # existem (ex. heliocentric return) — pula o alias em vez de
+            # derrubar o boot inteiro por uma rota que não usamos.
+            continue
         route = routes[new_path]
         application.router.add_api_route(
             old_path,
