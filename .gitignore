@@ -13,3 +13,4 @@ dist/
 uv.lock
 libephemeris-config.toml
 .DS_Store
+server.log
