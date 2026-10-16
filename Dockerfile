@@ -9,8 +9,8 @@ FROM python:3.13-slim AS deps
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 WORKDIR /build
 ENV UV_COMPILE_BYTECODE=1 UV_LINK_MODE=copy
-COPY pyproject.toml uv.lock ./
-RUN uv sync --frozen --no-dev --no-install-project
+COPY pyproject.toml ./
+RUN uv sync --no-dev --no-install-project
 
 FROM python:3.13-slim AS runtime
 COPY --from=deps /build/.venv /srv/.venv
